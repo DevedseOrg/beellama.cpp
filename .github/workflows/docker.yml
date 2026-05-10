@@ -121,6 +121,7 @@ jobs:
   push_to_registry:
     name: Push Docker image to Docker Registry
     needs: [prepare_matrices, create_tag]
+    timeout-minutes: 30
 
     runs-on: ${{ matrix.config.runs_on }}
     strategy:
@@ -319,6 +320,10 @@ jobs:
   merge_arch_tags:
     name: Create shared tags from digests
     needs: [prepare_matrices, push_to_registry, create_tag]
+    # Run even if some push_to_registry jobs failed — backends that built
+    # successfully will still get their tags. The find_digest function will
+    # fail gracefully for any backend whose digests are missing.
+    if: ${{ always() && needs.create_tag.result == 'success' && needs.prepare_matrices.result == 'success' }}
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
