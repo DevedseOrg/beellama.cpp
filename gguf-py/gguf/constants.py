@@ -1344,8 +1344,8 @@ TENSOR_NAMES: dict[MODEL_TENSOR, str] = {
     MODEL_TENSOR.NEXTN_HNORM:               "blk.{bid}.nextn.hnorm",
     MODEL_TENSOR.NEXTN_SHARED_HEAD_HEAD:    "blk.{bid}.nextn.shared_head_head",
     MODEL_TENSOR.NEXTN_SHARED_HEAD_NORM:    "blk.{bid}.nextn.shared_head_norm",
-    MODEL_TENSOR.DFLASH_FC:                 "dflash_fc",
-    MODEL_TENSOR.DFLASH_HIDDEN_NORM:        "dflash_hidden_norm",
+    MODEL_TENSOR.DFLASH_FC:                 "fc",
+    MODEL_TENSOR.DFLASH_HIDDEN_NORM:        "hidden_norm",
 }
 
 MODEL_TENSORS: dict[MODEL_ARCH, list[MODEL_TENSOR]] = {

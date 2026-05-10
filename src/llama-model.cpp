@@ -3003,6 +3003,11 @@ void llama_model::load_hparams(llama_model_loader & ml) {
                         }
                     }
                 }
+                // Fall back to computing n_target_features from target layer count if not
+                // present in the GGUF (older DFlash GGUFs omit this key).
+                if (hparams.dflash_n_target_features == 0 && hparams.dflash_n_target_layers > 0) {
+                    hparams.dflash_n_target_features = hparams.dflash_n_target_layers * hparams.n_embd;
+                }
                 // Optional SWA: when keys are absent, n_swa stays 0 and all layers use full attention
                 ml.get_key(LLM_KV_ATTENTION_SLIDING_WINDOW, hparams.n_swa, false);
                 if (hparams.n_swa > 0) {

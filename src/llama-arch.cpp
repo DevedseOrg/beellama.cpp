@@ -277,10 +277,10 @@ static const std::map<llm_kv, const char *> LLM_KV_NAMES = {
 
     { LLM_KV_WKV_HEAD_SIZE, "%s.wkv.head_size" },
 
-    { LLM_KV_DFLASH_BLOCK_SIZE,       "%s.dflash.block_size"        },
-    { LLM_KV_DFLASH_MASK_TOKEN_ID,    "%s.dflash.mask_token_id"     },
-    { LLM_KV_DFLASH_TARGET_LAYER_IDS, "%s.dflash.target_layer_ids"  },
-    { LLM_KV_DFLASH_N_TARGET_FEATURES,"%s.dflash.n_target_features" },
+    { LLM_KV_DFLASH_BLOCK_SIZE,       "%s.block_size"        },
+    { LLM_KV_DFLASH_MASK_TOKEN_ID,    "%s.mask_token_id"     },
+    { LLM_KV_DFLASH_TARGET_LAYER_IDS, "%s.target_layer_ids"  },
+    { LLM_KV_DFLASH_N_TARGET_FEATURES,"%s.n_target_features" },
 
     { LLM_KV_POSNET_EMBEDDING_LENGTH, "%s.posnet.embedding_length" },
     { LLM_KV_POSNET_BLOCK_COUNT,      "%s.posnet.block_count"      },
@@ -456,8 +456,8 @@ static const std::map<llm_tensor, const char *> LLM_TENSOR_NAMES = {
     { LLM_TENSOR_NEXTN_HNORM,                            "blk.%d.nextn.hnorm" },
     { LLM_TENSOR_NEXTN_SHARED_HEAD_HEAD,                 "blk.%d.nextn.shared_head_head" },
     { LLM_TENSOR_NEXTN_SHARED_HEAD_NORM,                 "blk.%d.nextn.shared_head_norm" },
-    { LLM_TENSOR_DFLASH_FC,                              "dflash_fc" },
-    { LLM_TENSOR_DFLASH_HIDDEN_NORM,                     "dflash_hidden_norm" },
+    { LLM_TENSOR_DFLASH_FC,                              "fc"                  },
+    { LLM_TENSOR_DFLASH_HIDDEN_NORM,                     "hidden_norm"         },
     { LLM_TENSOR_ATTN_SUB_NORM,                          "blk.%d.attn_sub_norm" },
     { LLM_TENSOR_FFN_SUB_NORM,                           "blk.%d.ffn_sub_norm" },
     { LLM_TENSOR_DEC_OUTPUT_NORM,                        "dec.output_norm" },

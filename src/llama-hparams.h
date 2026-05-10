@@ -151,7 +151,7 @@ struct llama_hparams {
     // for DFlash drafter
     uint32_t dflash_block_size        = 16;
     uint32_t dflash_mask_token_id     = 0;
-    uint32_t dflash_n_target_features = 25600;
+    uint32_t dflash_n_target_features = 0;
     uint32_t dflash_n_target_layers   = 0;
     uint32_t dflash_target_layer_ids[8] = {};
 
