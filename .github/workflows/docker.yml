@@ -11,6 +11,9 @@ name: Publish Docker image
 
 on:
   workflow_dispatch: # allows manual triggering
+  push:
+    branches:
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref && github.ref || github.run_id }}
