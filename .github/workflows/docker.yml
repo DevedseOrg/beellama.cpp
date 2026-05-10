@@ -27,7 +27,7 @@ permissions:
 jobs:
   create_tag:
     name: Create and push git tag
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     outputs:
