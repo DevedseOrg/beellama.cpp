@@ -65,6 +65,10 @@ jobs:
           set -euo pipefail
 
           # Keep all build targets in one place and derive merge targets from it.
+          # s390x entry removed: the ubuntu-24.04-s390x runner is not available
+          # in DevedseOrg and causes jobs to queue forever with no runner pickup.
+          # To restore, add back:
+          #   { "tag": "cpu", "dockerfile": ".devops/s390x.Dockerfile", "platforms": "linux/s390x", "full": true, "light": true, "server": true, "free_disk_space": false, "runs_on": "ubuntu-24.04-s390x" },
           cat > build-matrix.json <<'JSON'
           [
             { "tag": "cpu", "dockerfile": ".devops/cpu.Dockerfile", "platforms": "linux/amd64", "full": true, "light": true, "server": true, "free_disk_space": false, "runs_on": "ubuntu-24.04" },
