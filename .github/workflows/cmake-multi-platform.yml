@@ -1,0 +1,53 @@
+name: Compilar llama-server con CUDA (Linux)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch: # Botón manual en la interfaz de GitHub Actions
+
+jobs:
+  build-cuda-server:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout del repositorio
+      uses: actions/checkout@v4
+
+    - name: Configurar rutas de directorios
+      id: strings
+      shell: bash
+      run: |
+        echo "build-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+        echo "install-dir=${{ github.workspace }}/install_output" >> "$GITHUB_OUTPUT"
+
+    - name: Instalar NVIDIA CUDA Toolkit
+      uses: Jimver/cuda-toolkit@v0.2.35
+      id: cuda-toolkit
+      with:
+        cuda: '12.2.2'
+        method: 'network'
+
+    - name: Configurar CMake (Solo Servidor + CUDA)
+      run: >
+        cmake -B ${{ steps.strings.outputs.build-dir }}
+        -DCMAKE_BUILD_TYPE=Release
+        -DGGML_CUDA=ON
+        -DLLAMA_BUILD_TESTS=OFF
+        -DLLAMA_BUILD_EXAMPLES=OFF
+        -DLLAMA_BUILD_SERVER=ON
+        -S ${{ github.workspace }}
+
+    - name: Compilar estrictamente llama-server
+      run: cmake --build ${{ steps.strings.outputs.build-dir }} --config Release --target llama-server -j $(nproc)
+
+    - name: Aislar archivos en carpeta (CMake Install)
+      run: cmake --install ${{ steps.strings.outputs.build-dir }} --prefix ${{ steps.strings.outputs.install-dir }}
+
+    - name: Subir binario y dependencias como Artefacto
+      uses: actions/upload-artifact@v4
+      with:
+        name: llama-server-cuda-linux
+        path: ${{ steps.strings.outputs.install-dir }}/*
+        compression-level: 6 # Comprime el artefacto para ahorrar espacio y tiempo de subida
